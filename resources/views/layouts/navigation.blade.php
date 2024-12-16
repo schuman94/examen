@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         Inicio
                     </x-nav-link>
+                    <x-nav-link :href="route('cuentas.index')" :active="request()->routeIs('cuentas.index')">
+                        Cuentas
+                    </x-nav-link>
                 </div>
             </div>
 

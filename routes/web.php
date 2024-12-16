@@ -1,8 +1,10 @@
 <?php
 
-//use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\DB;
 
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CuentaController;
+use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Route::resource('libros', LibroController::class);
+Route::resource('clientes', ClienteController::class);
+Route::resource('cuentas', CuentaController::class);
+Route::resource('movimientos', MovimientoController::class);
+
+
 //Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
 
 require __DIR__.'/auth.php';
