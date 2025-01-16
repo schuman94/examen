@@ -20,7 +20,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Route::resource('libros', LibroController::class);
-//Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
+//  Route::resource('libros', LibroController::class);
+
+//  Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
+
+//  Route::put('prestamos/devolver/{prestamo}', [PrestamoController::class, 'devolver'])->name('prestamos.devolver');
+
+
+
+//  Route::resource('ejemplares', EjemplarController::class)->parameters([
+//      'ejemplares' => 'ejemplar',
+//  ]);
 
 require __DIR__.'/auth.php';
