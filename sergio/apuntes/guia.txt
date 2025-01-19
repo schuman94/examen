@@ -166,3 +166,9 @@ En otros modelos que se relacionen con el anterior, si tambien hay que crear una
     public function ce() {
             return $this->belongsTo(Ce::class, 'ccee_id');
     }
+
+
+CREAR FUNCIONES GENERICAS:
+Creamos un fichero helpers.php en app/ y añadimos nuestras funciones personalizadas como dinero() y fecha().
+En el composer.json debemos incluir en el autoload esto: "files": ["app/helpers.php"]
+Hacemos un composer dump-autoload para cargarlo.
