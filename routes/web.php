@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
 
 //  Route::put('prestamos/devolver/{prestamo}', [PrestamoController::class, 'devolver'])->name('prestamos.devolver');
 
+//  Route::post('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir')->middleware('auth');
+
 
 
 //  Route::resource('ejemplares', EjemplarController::class)->parameters([

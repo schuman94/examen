@@ -17,7 +17,7 @@ class VideojuegoController extends Controller
     public function index()
     {
         return view('videojuegos.index', [
-            // 'videojuegos' => Auth::user()->videojuegos, // Esto es para que solo aparezcan los del user logeado
+            //'videojuegos' => Auth::user()->videojuegos, // Esto es para que solo aparezcan los del user logeado
             'videojuegos' => Videojuego::all(),
         ]);
     }
@@ -92,28 +92,24 @@ class VideojuegoController extends Controller
 
     public function adquirir(Videojuego $videojuego)
     {
-        if ($videojuego->id) {
-            $usuario = Auth::user();
 
-            if (!$usuario) {
+        //Esto lo ignoramos porque ya hemos metido el middleware('auth') en el web.php
+        /*  if (!Auth::user()) {
                 abort(403, 'Usuario no autenticado.');
             }
+        */
 
-            // Verificar si el videojuego ya está asociado
-            if ($usuario->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
-
-                // Incrementar la cantidad en la tabla pivot
-                $usuario->videojuegos()->updateExistingPivot($videojuego->id, [
-                    'cantidad' => DB::raw('cantidad + 1')
-                ]);
-                session()->flash('exito', 'Videojuego adquirido otra vez.');
-
-            } else {
-                // Crear una nueva relación con cantidad inicial de 1
-                $usuario->videojuegos()->attach($videojuego->id);
-                session()->flash('exito', 'Videojuego adquirido.');
-            }
-
+        // Verificar si el videojuego ya está asociado
+        if (Auth::user()->videojuegos()->where('videojuego_id', $videojuego->id)->exists()) {
+            // Incrementar la cantidad en la tabla pivot
+            Auth::user()->videojuegos()->updateExistingPivot($videojuego->id, [
+                'cantidad' => DB::raw('cantidad + 1')
+            ]);
+            session()->flash('exito', 'Videojuego adquirido otra vez.');
+        } else {
+            // Crear una nueva relación con cantidad inicial de 1
+            Auth::user()->videojuegos()->attach($videojuego->id);
+            session()->flash('exito', 'Videojuego adquirido.');
         }
 
         return redirect()->route('videojuegos.index');
