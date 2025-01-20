@@ -172,3 +172,54 @@ CREAR FUNCIONES GENERICAS:
 Creamos un fichero helpers.php en app/ y añadimos nuestras funciones personalizadas como dinero() y fecha().
 En el composer.json debemos incluir en el autoload esto: "files": ["app/helpers.php"]
 Hacemos un composer dump-autoload para cargarlo.
+
+VALIDATE EN EL CONTROLADOR
+
+public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'codigo' => 'required|string|unique:articulo,codigo',       // valor unico en su propia tabla y columna
+            'descripcion' => 'nullable|string|max:255',
+            'precio' => 'required|numeric|min:0|max:999999.99',         // esto equivale en la migracion a un: decimal('precio', 8, 2)
+            'categoria_id' => 'required|integer|exists:categorias,id',   // debe existir en la columna 'id' de la tabla 'categorias'
+            'fecha' => 'required|date|date_format:Y-m-d',
+            'fecha_hora' => 'required|date|date_format:Y-m-d H:i:s'
+        ]);
+
+        $articulo = Articulo::create($validated);
+        session()->flash('exito', 'Artículo creado correctamente.');
+        return redirect()->route('articulos.show', $articulo);
+    }
+
+
+
+public function update(Request $request, articulo $articulo)
+    {
+        $validated = $request->validate([
+            'codigo' => [
+                'required',
+                'string',
+                Rule::unique('articulos')->ignore($articulo),           // Verifica que sea único en la tabla 'articulos' ignorando su propio codigo
+            ],
+            'descripcion' => 'string|max:255|nullable',
+            'precio' => 'required|numeric|min:0|max:999999.99',
+            'categoria_id' => 'required|integer|exists:categorias,id',
+            'fecha' => 'required|date|date_format:Y-m-d',
+            'fecha_hora' => 'required|date|date_format:Y-m-d H:i:s'
+        ]);
+
+        $articulo->fill($validated);
+        $articulo->save();
+        session()->flash('exito', 'Artículo modificado correctamente.');
+        return redirect()->route('articulo.index');
+    }
+
+
+Es importante que en el modelo incluyamos estos dos codigos:
+
+protected $fillable = ['codigo', 'descripcion', 'precio', 'categoria_id', 'fecha', 'fecha_hora'];
+
+protected $casts = [
+    'fecha' => 'datetime',
+    'fecha_hora' => 'datetime',
+];
