@@ -19,7 +19,7 @@ if (!function_exists('fecha')){
 }
 
 if (!function_exists('fecha_hora')){
-    function fecha($s)
+    function fecha_fecha($s)
     {
         return (new Carbon($s))->settings([
             'locale' => 'es_ES',
