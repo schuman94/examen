@@ -156,7 +156,9 @@ En el modelo especificar el nombre de la tabla:
 Si proyeccion_id fuese clave foranea de otra tabla, habria que indicarlo explícitamente la migracion de dicha tabla:
     $table->foreignId('proyeccion_id')->constrained('proyecciones');
 
-Además, cuando cuando la clave primaria de la tabla no se llama tablasingular_id:
+
+
+Cuando cuando la clave primaria de la tabla no se llama tablasingular_id:
 En el modelo hay que indicar como se llama la clave foranea de la otra tabla con la que se relaciona:
     public function notas() {
         return $this->hasMany(Nota::class, 'ccee_id');
@@ -223,3 +225,6 @@ protected $casts = [
     'fecha' => 'datetime',
     'fecha_hora' => 'datetime',
 ];
+
+Para crear un uuid:
+numero = (string) Str::uuid()
