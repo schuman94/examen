@@ -530,7 +530,7 @@ Por ultimo, escribimos el contenido en pelicula-valorada-md.blade.php:
     Puntuación: {{$valoracion->puntuacion}}
 
 ---------------------LIVEWIRE MANUAL--------------------------------------------------------
-Para instalarlo manualmente: composer require livewire/livewire
+Para instalarlo manualmente: composer require livewire/livewire (ya instalado en examen)
 
 Luego creamos un componente con: php artisan make:livewire ValoracionesPelicula
 Este comando nos crea dos archivos:

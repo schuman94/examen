@@ -28,10 +28,22 @@ Route::middleware('auth')->group(function () {
 
 //  Route::post('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir')->middleware('auth');
 
-
-
 //  Route::resource('ejemplares', EjemplarController::class)->parameters([
 //      'ejemplares' => 'ejemplar',
 //  ]);
+
+// Route::put('peliculas/{pelicula}/anyadir_genero', [PeliculaController::class, 'anyadir_genero'])->name('peliculas.anyadir_genero');
+
+// Route::get('/counter', Counter::class);
+
+// Route::get('/ruta/{objeto}', function (Objeto $objeto) {
+//     acciones
+//     return redirect()->route('otra.ruta');
+// })->name('ruta.accion');
+
+// Route::get('/ruta', function () {
+//     // acciones
+//     return redirect()->route('otra.ruta');
+// })->name('ruta.accion');
 
 require __DIR__.'/auth.php';
