@@ -18,6 +18,7 @@ Crear usuario y base de datos si no existen
 php artisan migrate:fresh
 php artisan key:generate
 composer run dev
+--------------------------------------------------------------------------------------------------------------------------------
 
 COMENZANDO A PROGRAMAR
 
@@ -81,6 +82,8 @@ Si en vez de la propiedad usamos el metodo, por ejemplo Empleado->departamento()
 Reglas en las relaciones:
 En las relaciones 1 a 1, y 1 a muchos, el belongsTo hay que ponerselo al que tenga la foreignId en la tabla.
 
+--------------------------------------------TABLA PIVOTE: MUCHOS A MUCHOS------------------------------------------------------------------------
+
 TABLA PIVOTE: En las relaciones muchos a muchos, se requiere de una tabla intermedia.
 La tabla por  convenio se llama como las dos tablas ordenadas alfabeticamente y con un _ en medio.
 Ejemplo: user_videojuego
@@ -111,6 +114,7 @@ foreach ($user->videojuegos as $videojuego)
     {{ $videojuego->pivot->cantidad }}
 
 En el modelo Factura hay una funcion calcular_precio() más elaborada que trabaja con las tablas articulo y articulo_factura
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 En las rutas, podemos meter el controlador de factura dentro del grupo que lleva el middleware de auth para que solo puedan acceder los logeados.
 Además, en el controlador de factura podriamos hacer que solo se obtengan en el index las facturas de user logeado:
@@ -134,6 +138,9 @@ En el show podriamos hacer que solo entre quien es usuario de esa factura concre
             'factura' => $factura,
         ]);
     }
+(Esto deberiamos hacerlo mejor con una gate o politica)
+
+-----------------------------------------------RUTAS WEB.PHP---------------------------------------------------------------------------------
 
 Para crear una ruta diferente:
 Route::put('prestamos/devolver/{prestamo}', [PrestamoController::class, 'devolver'])->name('prestamos.devolver');
@@ -141,8 +148,7 @@ Route::put('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'a
 Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
 Además, hay que crear la funcion en el controlador, y un archivo de vista en el caso de alumnos
 
-
-
+-------------------------------------------------PLURAL-------------------------------------------------------------------------------------
 
 Para un modelo cuyo PLURAL no es regular:
 En la consola: php artisan make:model Proyeccion
@@ -159,6 +165,7 @@ Si proyeccion_id fuese clave foranea de otra tabla, habria que indicarlo explíc
     $table->foreignId('proyeccion_id')->constrained('proyecciones');
 
 
+-----------------------------------------------CCEE----------------------------------------------------------------------------------------
 
 Cuando cuando la clave primaria de la tabla no se llama tablasingular_id:
 En el modelo hay que indicar como se llama la clave foranea de la otra tabla con la que se relaciona:
@@ -171,13 +178,14 @@ En otros modelos que se relacionen con el anterior, si tambien hay que crear una
             return $this->belongsTo(Ce::class, 'ccee_id');
     }
 
+----------------------------------------------------------------------------------------------------------------------------------------
 
 CREAR FUNCIONES GENERICAS:
 Creamos un fichero helpers.php en app/ y añadimos nuestras funciones personalizadas como dinero() y fecha().
 En el composer.json debemos incluir en el autoload esto: "files": ["app/helpers.php"]
 Hacemos un composer dump-autoload para cargarlo.
 
-VALIDATE EN EL CONTROLADOR
+-------------------------------------VALIDATE EN EL CONTROLADOR--------------------------------------------------------------------------
 
 public function store(Request $request)
     {
@@ -228,12 +236,13 @@ protected $casts = [
     'fecha_hora' => 'datetime',
 ];
 
+-----------------------------------------UUID-----------------------------------------------------------
 Para crear un uuid:
 numero = (string) Str::uuid()
 
 
-ENERO 2025
 
+ENERO 2025
 ----------------RELACIONES POLIMORFICAS: UNO A MUCHOS-------------------------------------------------
 
 Ejemplo:
